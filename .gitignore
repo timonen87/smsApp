@@ -2,7 +2,7 @@
 ################
 venv/
 .vscode
-
+.env
 # Django #
 ##########
 *.log

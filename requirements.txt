@@ -1,5 +1,6 @@
 Django==4.1.1
-djangorestframework==3.14.0
+# djangorestframework==3.14.0
+djangorestframework==3.12.4
 psycopg2==2.9.3
 celery==5.2.7
 redis==3.5.3
@@ -7,3 +8,6 @@ flower==1.2.0
 requests==2.30.0
 drf-yasg==1.21.5
 python-dotenv==0.20.0
+djangorestframework-simplejwt==5.0.0
+drf-spectacular==0.21.1
+drf-spectacular-sidecar==2021.12.13

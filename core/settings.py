@@ -136,6 +136,7 @@ USE_TZ = True
 #     # ),
 # }
 
+
 REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'permissions.IsSuperUserOrReadOnly',

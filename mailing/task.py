@@ -12,6 +12,7 @@ logger = get_task_logger(__name__)
 load_dotenv()
 URL = os.getenv("URL")
 TOKEN = os.getenv("TOKEN")
+print(TOKEN)
 
 
 @app.task(bind=True, retry_backoff=True)

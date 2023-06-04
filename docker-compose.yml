@@ -6,11 +6,8 @@ services:
       - "8080:8080"
     volumes:
       - .:/app
-    environment:
-      - DB_HOST=db
-      - DB_NAME=dbname
-      - DB_USER=dbuser
-      - DB_PASS=pass
+    env_file:
+      - ".env"
     command: >
        sh -c "python manage.py runserver 0.0.0.0:8080"
     depends_on:
@@ -18,10 +15,9 @@ services:
 
   db:
     image: postgres:14.6-alpine
-    environment:
-      - POSTGRES_DB=dbname
-      - POSTGRES_USER=dbuser
-      - POSTGRES_PASSWORD=pass
+    env_file:
+      - ".env.db"
+
   redis:
     image: redis:7.0.5-alpine
     hostname: redis
@@ -39,11 +35,8 @@ services:
     depends_on:
       - redis
       - db
-    environment:
-      - DB_HOST=db
-      - DB_NAME=dbname
-      - DB_USER=dbuser
-      - DB_PASS=pass
+    env_file:
+      - ".env"
 
   flower:
     build:
@@ -59,3 +52,4 @@ services:
       - redis
     ports:
       - "5555:5555"
+

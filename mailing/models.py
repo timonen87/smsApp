@@ -9,12 +9,12 @@ class Mailing(models.Model):
     time_start = models.TimeField(verbose_name='Время начала отправки сообщений')
     time_end = models.TimeField(verbose_name='Время окончаня отправки сообщений')
     content = models.TextField(max_length=300, verbose_name='Текст сообщения')
-    tags = models.CharField(max_length=50, verbose_name='Теги', blank=True)
+    tag = models.CharField(max_length=50, verbose_name='Теги', blank=True)
     mobile_code = models.CharField(max_length=3, blank=True, verbose_name='Код оператора мобильной связи')
 
 
     @property
-    def valide_date(self) -> bool:
+    def to_send(self) -> bool:
         return bool(self.date_start <= timezone.now() <= self.date_end)
 
     def __str__(self):
@@ -33,13 +33,15 @@ class Client(models.Model):
     )
 
     phone_number = models.CharField(max_length=11, validators=[num_valide], verbose_name='Номер телефона', unique=True )
-    m_code = models.CharField(max_length=3, editable=False, verbose_name='Код оператора мобильной связи')
+    mobile_code = models.CharField(max_length=3,  verbose_name='Код оператора мобильной связи', editable=False)
     tag = models.CharField(max_length=100, blank=True, verbose_name="Теги")
     timezone = models.CharField(max_length=32, choices=TIMEZONES, verbose_name='Часовой пояс', default="UTC")
 
     def save(self, *args, **kwargs):
-        self.m_code = str(self.phone_number)[1:4]
+        self.mobile_code = str(self.phone_number)[1:4]
         return super(Client, self).save(*args, **kwargs)
+
+
 
     def __str__(self):
         return f'Клиент #{self.id} с номером {self.phone_number}'

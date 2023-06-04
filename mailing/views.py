@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
+from requests import Response
 from rest_framework import viewsets
+from rest_framework.decorators import action
+
 from .models import Mailing, Message, Client
 from .serializers import MailingSerializer, MessageSerializer, ClientSerializer
 
@@ -7,6 +10,43 @@ from .serializers import MailingSerializer, MessageSerializer, ClientSerializer
 class MailingViewSet(viewsets.ModelViewSet):
     serializer_class = MailingSerializer
     queryset = Mailing.objects.all()
+
+    @action(detail=True, methods=['get'])
+    def totalstat(self, request, pk=None):
+        mailings = Mailing.objects.all()
+        get_object_or_404(mailings, pk=pk)
+        queryset = Message.objects.filter(mailing_id=pk).all()
+        serializer = MessageSerializer(queryset, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['get'])
+    def fullstat(self, request):
+        count = Mailing.objects.count()
+        # Берем из базы данных общее количество созданных рассылок
+        mailings = Mailing.objects.values('id')
+        # Берем из базы данных  id рассылок
+        message_stat = {}
+        # Создаем словарь, где будует храниться статистика
+        fullstat = {
+            'total count mailings': count,
+            'results': message_stat,
+        }
+         #Создаем словарь для всей статистики
+
+
+        for mailing in mailings:
+            result = {'total messages': 0, 'sent': 0, 'no sent': 0}
+
+            message_db = Message.objects.filter(mailing_id=mailing['id']).all()
+            send_messages = message_db.filter(sending_status='sent').count()
+            no_sent_messages = message_db.filter(sending_status='so sent').count()
+            result['total messages'] = len(message_db)
+            result['sent'] = send_messages
+            result['no sent'] = no_sent_messages
+            message_stat[mailing['id']] = result
+
+        fullstat['results'] = message_stat
+        return Response(fullstat)
 
 class MessageViewSet(viewsets.ModelViewSet):
     serializer_class = MessageSerializer

@@ -15,8 +15,8 @@ RUN pip install -r /temp/requirements.txt
 RUN adduser -D dockuser
 USER dockuser
 
-CMD python3 manage.py makemigrations --noinput && \
-    python3 manage.py migrate --noinput && \
-    python3 manage.py collectstatic --noinput && \
+#CMD python3 manage.py makemigrations --noinput && \
+#    python3 manage.py migrate --noinput && \
+#    python3 manage.py collectstatic --noinput && \
 
 #CMD sudo chown -R $dockuser:$dockuser /app

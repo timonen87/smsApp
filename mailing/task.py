@@ -12,11 +12,10 @@ logger = get_task_logger(__name__)
 load_dotenv()
 URL = os.getenv("URL")
 TOKEN = os.getenv("TOKEN")
-print(TOKEN)
 
 
 @app.task(bind=True, retry_backoff=True)
-def send_msg(self, data, client_id, mailing_id, url=URL, token=TOKEN):
+def send_message(self, data, client_id, mailing_id, url=URL, token=TOKEN):
     from .models import Mailing, Message, Client
     mailing = Mailing.objects.get(pk=mailing_id)
     client = Client.objects.get(pk=client_id)
@@ -31,14 +30,19 @@ def send_msg(self, data, client_id, mailing_id, url=URL, token=TOKEN):
         }
         try:
             requests.post(api_url, headers=header, json=data)
-
         except requests.exceptions.RequestException as ex:
             logger.info(f'Сообщение {data["id"]} с ошибкой {ex}')
         else:
             logger.info(f'Сообщение {data["id"]} успешно отправлено')
-            Message.objects.filter(pk=data['id']).update(sending_status='sent')
+            Message.objects.filter(pk=data['id']).update(msg_status='sent')
     else:
         logger.info(
             f"Сообщение {data['id']} будет отправлено повтороно через {60} секунд"
         )
         return self.retry(countdown=60)
+
+
+
+
+
+

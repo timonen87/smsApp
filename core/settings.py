@@ -145,7 +145,7 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'SMS Mailing Service',
-    'DESCRIPTION': 'Это пример API сервиса для отправки сообщения на номер телефона, '
+    'DESCRIPTION': 'Это пример API сервиса для отправки сообщений на номер телефона, '
                    'Внешний сервис для отправки сообщений: https://probe.fbrq.cloud/docs ',
     'VERSION': '1.0',
     'SWAGGER_UI_DIST': 'SIDECAR',

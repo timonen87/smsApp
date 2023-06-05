@@ -3,6 +3,7 @@ import datetime
 from dotenv import load_dotenv
 import pytz
 import requests
+from rest_framework.response import Response
 
 from celery.utils.log import get_task_logger
 from core.celery import app
@@ -28,12 +29,14 @@ def send_message(self, data, client_id, mailing_id, url=URL, token=TOKEN):
             "Authorization": f"Bearer {token}",
             "Content-Type": "application/json",
         }
+
         try:
             requests.post(api_url, headers=header, json=data)
         except requests.exceptions.RequestException as ex:
             logger.info(f'Сообщение {data["id"]} с ошибкой {ex}')
         else:
             logger.info(f'Сообщение {data["id"]} успешно отправлено')
+
             Message.objects.filter(pk=data['id']).update(msg_status='sent')
     else:
         logger.info(

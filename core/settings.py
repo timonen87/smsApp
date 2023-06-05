@@ -158,7 +158,8 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'SMS Mailing Service',
-    'DESCRIPTION': 'smsAPP',
+    'DESCRIPTION': 'Это пример API сервиса для отправки сообщения на номер телефона '
+                   'Внешний сервис для отправки сообщений ',
     'VERSION': '1.0',
     'SWAGGER_UI_DIST': 'SIDECAR',
     'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',

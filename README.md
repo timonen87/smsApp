@@ -1,6 +1,6 @@
-#SMS APP Сервис создание рассылок сообщений (с возможностью отложенной отправки сообщений)
+# SMS Mailing Сервис рассылки сообщений с возможностью отложенной отправки сообщений
 
-Сервис разработан на django rest framework с celery и flower
+Django / djangorestframework / Celery / Redis / Flower
 
 
 ## Запуск проекта
@@ -83,7 +83,7 @@ sudo docker-compose up -d
 
 ```http://0.0.0.0:8080/api/mailings/``` - все рассылки постранично
 
-```http://0.0.0.0:8080/api/mailings/fullstat/``` - Общая статистика по всем рассылкам
+```http://0.0.0.0:8080/api/mailings/fullstat/``` - общая статистика по всем рассылкам
 
 ```http://0.0.0.0:8080/api/mailings/<pk>/totalstat/``` - статистика по каждому сообщению из рассылки
 

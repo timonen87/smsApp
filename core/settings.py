@@ -152,10 +152,6 @@ REST_FRAMEWORK = {
         'rest_framework.renderers.JSONRenderer',
         'rest_framework.renderers.TemplateHTMLRenderer',
     ],
-    'DEFAULT_THROTTLE_RATES': {
-        "authentication": "5/hour",
-        "verify_authentication": "8/hour",
-    },
     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
     "PAGE_SIZE": 20,
 }

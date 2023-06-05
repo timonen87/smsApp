@@ -37,9 +37,9 @@ def send_message(self, data, client_id, mailing_id, url=URL, token=TOKEN):
             Message.objects.filter(pk=data['id']).update(msg_status='sent')
     else:
         logger.info(
-            f"Сообщение {data['id']} будет отправлено повтороно через {60} секунд"
+            f"Сообщение {data['id']} будет отправлено повтороно через {3600} секунд"
         )
-        return self.retry(countdown=60)
+        return self.retry(countdown=3600)
 
 
 

@@ -9,6 +9,19 @@ from .task import send_message
 
 @receiver(post_save, sender=Mailing, dispatch_uid="create_message")
 def create_message(sender, instance, created, **kwargs):
+    """
+    instance - созданная рассылка с заданными парамтерами времени и даты
+    Функция создает сообщения(со статусом "no sent") для колиентов, подходящим по параметрам
+    (тег, мобильный код оператора).
+
+    Отправка сообщений отпрвляется в celery для отправки по соответсвующим прамтерам времени в рассылке
+
+    :param sender:
+    :param instance:
+    :param created:
+    :param kwargs:
+    :return:
+    """
     if created:
         mailing = Mailing.objects.filter(id=instance.id).first()
         clients = Client.objects.filter(
@@ -27,7 +40,6 @@ def create_message(sender, instance, created, **kwargs):
                 "id": message.id,
                 "phone": client.phone_number,
                 "text": mailing.content,
-
             }
             client_id = client.id
             mailing_id = mailing.id
@@ -40,7 +52,4 @@ def create_message(sender, instance, created, **kwargs):
                     eta=mailing.date_start,
                     expires=mailing.date_end,
                 )
-
-
-# post_save.connect(send_message, sender=Mailing)
 

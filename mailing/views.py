@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404
-from requests import Response
+from rest_framework.response import Response
 from rest_framework import viewsets
 from rest_framework.decorators import action
 
@@ -13,6 +13,12 @@ class MailingViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['get'])
     def totalstat(self, request, pk=None):
+        """
+        Статистика по каждому сообщению из рассылки
+        :param request:
+        :param pk:
+        :return:
+        """
         mailings = Mailing.objects.all()
         get_object_or_404(mailings, pk=pk)
         queryset = Message.objects.filter(mailing_id=pk).all()
@@ -21,6 +27,11 @@ class MailingViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def fullstat(self, request):
+        """
+        Общая статистика по всем рассылкам
+        :param request:
+        :return:
+        """
         count = Mailing.objects.count()
         # Берем из базы данных общее количество созданных рассылок
         mailings = Mailing.objects.values('id')
@@ -31,15 +42,16 @@ class MailingViewSet(viewsets.ModelViewSet):
             'total count mailings': count,
             'results': message_stat,
         }
-         #Создаем словарь для всей статистики
+
 
 
         for mailing in mailings:
+            # Создаем словарь для статистики по каждому сообщению
             result = {'total messages': 0, 'sent': 0, 'no sent': 0}
 
             message_db = Message.objects.filter(mailing_id=mailing['id']).all()
-            send_messages = message_db.filter(sending_status='sent').count()
-            no_sent_messages = message_db.filter(sending_status='so sent').count()
+            send_messages = message_db.filter(msg_status='sent').count()
+            no_sent_messages = message_db.filter(msg_status='so sent').count()
             result['total messages'] = len(message_db)
             result['sent'] = send_messages
             result['no sent'] = no_sent_messages

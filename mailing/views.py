@@ -15,6 +15,7 @@ class MailingViewSet(viewsets.ModelViewSet):
     def totalstat(self, request, pk=None):
         """
         Статистика по каждому сообщению из рассылки
+
         :param request:
         :param pk:
         :return:

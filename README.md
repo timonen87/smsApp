@@ -77,7 +77,6 @@ sudo docker-compose up -d
 
 ## API методы 
 ***
-```http://0.0.0.0:8080/api/``` - API Root
 
 ```http://0.0.0.0:8080/api/clients/``` - все клиенты
 
@@ -89,9 +88,11 @@ sudo docker-compose up -d
 
 ```http://0.0.0.0:8080/api/messages/``` - все сообщения постранично
 
-```http://0.0.0.0:8080/api/schema/swagger-ui/``` - swagger docs проекта
+```http://0.0.0.0:8080/api/schema/``` - OpenApi schema 
 
-```http://0.0.0.0:8080/api/schema/redoc``` - документация api методов
+```http://0.0.0.0:8080/api/docs/``` - swagger api
+
+```http://0.0.0.0:8080/api/redoc/``` - документация api методов
 
 ```http://0.0.0.0:5555``` -  просмотр задач celery flower
 

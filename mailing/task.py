@@ -1,5 +1,7 @@
 import os
 import datetime
+
+from celery import shared_task
 from dotenv import load_dotenv
 import pytz
 import requests
@@ -43,6 +45,7 @@ def send_message(self, data, client_id, mailing_id, url=URL, token=TOKEN):
             f"Сообщение {data['id']} будет отправлено повтороно через {3600} секунд"
         )
         return self.retry(countdown=3600)
+
 
 
 

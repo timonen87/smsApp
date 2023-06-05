@@ -2,19 +2,18 @@
 from django.db.models.signals import post_save, post_init
 from django.dispatch import receiver
 from django.db.models import Q
-
+from django.conf import settings
 from .models import Mailing, Client, Message
 from .task import send_message
+
 
 
 @receiver(post_save, sender=Mailing, dispatch_uid="create_message")
 def create_message(sender, instance, created, **kwargs):
     """
-    instance - созданная рассылка с заданными парамтерами времени и даты
-    Функция создает сообщения(со статусом "no sent") для колиентов, подходящим по параметрам
-    (тег, мобильный код оператора).
-
-    Отправка сообщений отпрвляется в celery для отправки по соответсвующим прамтерам времени в рассылке
+    Функция принимает эксземпляр класса Mailing и создает сообщения для клиента,
+    если совпадает код оператора ил теги. Сообщения отправляются в очередь на отправку
+    в соответсвии с верменнем указанным при создании рассылки.
 
     :param sender:
     :param instance:
@@ -27,7 +26,6 @@ def create_message(sender, instance, created, **kwargs):
         clients = Client.objects.filter(
             Q(mobile_code=mailing.mobile_code) | Q(tag=mailing.tag)
         ).all()
-
         for client in clients:
 
             Message.objects.create(

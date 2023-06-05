@@ -85,13 +85,12 @@ WSGI_APPLICATION = "core.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': os.environ.get('DB_HOST'),
+        'HOST': os.environ.get('DB_HOST',),
         'NAME': os.environ.get('DB_NAME'),
         'USER': os.environ.get('DB_USER'),
         'PASSWORD': os.environ.get('DB_PASS')
     }
 }
-
 
 
 
@@ -127,20 +126,8 @@ USE_TZ = True
 
 
 
-# REST_FRAMEWORK = {
-#     "DEFAULT_SCHEMA_CLASS": "rest_framework.schemas.coreapi.AutoSchema",
-#     "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
-#     "PAGE_SIZE": 10,
-#     # 'DEFAULT_PERMISSION_CLASSES': (
-#     #     'rest_framework.permissions.IsAuthenticated',
-#     # ),
-# }
-
 
 REST_FRAMEWORK = {
-    # 'DEFAULT_PERMISSION_CLASSES': [
-    #     'permissions.IsSuperUserOrReadOnly',
-    # ],
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -158,8 +145,8 @@ REST_FRAMEWORK = {
 
 SPECTACULAR_SETTINGS = {
     'TITLE': 'SMS Mailing Service',
-    'DESCRIPTION': 'Это пример API сервиса для отправки сообщения на номер телефона '
-                   'Внешний сервис для отправки сообщений ',
+    'DESCRIPTION': 'Это пример API сервиса для отправки сообщения на номер телефона, '
+                   'Внешний сервис для отправки сообщений: https://probe.fbrq.cloud/docs ',
     'VERSION': '1.0',
     'SWAGGER_UI_DIST': 'SIDECAR',
     'SWAGGER_UI_FAVICON_HREF': 'SIDECAR',
@@ -185,3 +172,6 @@ CELERY_BROCKER_TRANSPORT_OPTIONS = {"visibility_timeout": 3600}
 CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
+
+
+

@@ -12,17 +12,17 @@ class TestModel(APITestCase):
             content="test",
             time_start=now().time(),
             time_end=now().time(),
-            tags="mts",
+            tag="mts",
             mobile_code='926'
         )
         self.assertIsInstance(mailing, Mailing)
-        self.assertEqual(mailing.tags, "mts")
+        self.assertEqual(mailing.tag, "mts")
         self.assertEqual(mailing.mobile_code, "926")
 
     def test_creates_clients(self):
         client = Client.objects.create(
             phone_number="79268456345",
-            m_code="926",
+            mobile_code="926",
             tag="mts",
             timezone="UTC",
         )

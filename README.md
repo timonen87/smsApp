@@ -1,4 +1,4 @@
-# SMS Mailing Сервис рассылки сообщений с возможностью отложенной отправки сообщений
+# SMS Mailing Сервис рассылки сообщений с возможностью отложенной отправки
 
 Django / djangorestframework / Celery / Redis / Flower
 

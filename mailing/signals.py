@@ -42,7 +42,7 @@ def create_message(sender, instance, created, **kwargs):
             client_id = client.id
             mailing_id = mailing.id
 
-            if instance.to_send:
+            if instance.valide_date:
                 send_message.apply_async((data, client_id, mailing_id), expires=mailing.date_end)
             else:
                 send_message.apply_async(

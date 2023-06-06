@@ -41,10 +41,11 @@ def send_message(self, data, client_id, mailing_id, url=URL, token=TOKEN):
 
             Message.objects.filter(pk=data['id']).update(msg_status='sent')
     else:
+        time_retry = 24 - int(mailing.time_start.strftime("%H:%M:%S")[:2])
         logger.info(
-            f"Сообщение {data['id']} будет отправлено повтороно через {3600} секунд"
+            f"Сообщение {data['id']} будет отправлено повтороно через {time_retry * 3600} секунд"
         )
-        return self.retry(countdown=3600)
+        return self.retry(countdown=time_retry * 3600)
 
 
 

@@ -5,11 +5,8 @@ Django / djangorestframework / Celery / Redis / Flower
 
 ## Запуск проекта
 
-1. Клонируем репозиторий с github.com:
+1. Клонируем репозиторий
 
-````
-git@github.com:timonen87/smsApp.git
-````
 2. Заходим в директорию проекта
 ````
 cd smsApp
@@ -55,10 +52,8 @@ python manage.py test
 ## Установка с  docker-compose
 
 
-1. Клонируем репозиторий с github.com:
-```
-git@github.com:timonen87/smsApp.git
-```
+1. Клонируем репозиторий
+
 2. Заходим в директорию проекта
 ````
 cd smsApp

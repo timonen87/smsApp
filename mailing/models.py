@@ -14,7 +14,7 @@ class Mailing(models.Model):
 
 
     @property
-    def to_send(self) -> bool:
+    def valide_date(self):
         return bool(self.date_start <= timezone.now() <= self.date_end)
 
     def __str__(self):
